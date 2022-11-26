@@ -36,7 +36,7 @@ function onImageClick(evt) {
     return;
   }
   instance = basicLightbox.create(`<img src="${evt.target.dataset.source}" alt="${evt.target.alt}" width="800" height="600">`,
-    {
+    { // closable: false,
     onShow: (instance) => { bodyRef.classList.add("no-scroll"); bodyRef.addEventListener("keydown", onEscapeClick) },
     onClose: (instance) => {bodyRef.classList.remove("no-scroll"); bodyRef.removeEventListener("keydown", onEscapeClick)},
   });
