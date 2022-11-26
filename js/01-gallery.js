@@ -18,6 +18,7 @@ function createGalleryMarkup(array) {
   <a class="gallery__link" href="${original}">
     <img
       class="gallery__image"
+      loading="lazy"
       src="${preview}"
       data-source="${original}"
       alt="${description}"
