@@ -3,14 +3,12 @@ import { galleryItems } from "./gallery-items.js";
 const bodyRef = document.querySelector("body");
 const galleryRef = document.querySelector(".gallery");
 const galleryMarkup = createGalleryMarkup(galleryItems);
+let instance = null;
 
 galleryRef.innerHTML = galleryMarkup;
 
 galleryRef.addEventListener("click", onImageClick);
-
 bodyRef.addEventListener("keydown", onEscapeClick);
-
-let instance = null;
 
 function createGalleryMarkup(array) {
   return array
@@ -38,7 +36,10 @@ function onImageClick(evt) {
   }
   instance = basicLightbox.create(`
     <img src="${evt.target.dataset.source}" alt="${evt.target.alt}" width="800" height="600">
-`);
+`, {
+    onShow: (instance) => bodyRef.classList.add("no-scroll"),
+    onClose: (instance) => bodyRef.classList.remove("no-scroll"),
+  });
   instance.show();
 }
 
