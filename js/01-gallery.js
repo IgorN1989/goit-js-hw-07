@@ -8,7 +8,7 @@ let instance = null;
 galleryRef.innerHTML = galleryMarkup;
 
 galleryRef.addEventListener("click", onImageClick);
-bodyRef.addEventListener("keydown", onEscapeClick);
+
 
 function createGalleryMarkup(array) {
   return array
@@ -35,17 +35,16 @@ function onImageClick(evt) {
   if (evt.target.nodeName !== "IMG") {
     return;
   }
-  instance = basicLightbox.create(`
-    <img src="${evt.target.dataset.source}" alt="${evt.target.alt}" width="800" height="600">
-`, {
-    onShow: (instance) => bodyRef.classList.add("no-scroll"),
-    onClose: (instance) => bodyRef.classList.remove("no-scroll"),
+  instance = basicLightbox.create(`<img src="${evt.target.dataset.source}" alt="${evt.target.alt}" width="800" height="600">`,
+    {
+    onShow: (instance) => { bodyRef.classList.add("no-scroll"); bodyRef.addEventListener("keydown", onEscapeClick) },
+    onClose: (instance) => {bodyRef.classList.remove("no-scroll"); bodyRef.removeEventListener("keydown", onEscapeClick)},
   });
   instance.show();
 }
 
 function onEscapeClick(evt) {
-  if (onImageClick && evt.code === "Escape") {
+  if (evt.code === "Escape") {
     instance.close();
   }
 }
